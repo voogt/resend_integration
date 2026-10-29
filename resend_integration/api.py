@@ -1,6 +1,13 @@
 import frappe
 from svix.webhooks import Webhook, WebhookVerificationError
 
+from frappe.utils.password import get_decrypted_password
+
+
+def get_resend_api_key():
+	return get_decrypted_password("Resend Settings", "Resend Settings", "api_key")
+
+
 EMAIL_STATUS_UPDATE_EVENTS = [
 	"sent",
 	"delivered",
@@ -58,8 +65,6 @@ def send_resend_emails(
 
 
 def verify_signing_secret():
-	from frappe.utils.password import get_decrypted_password
-
 	payload = frappe.request.data
 	headers = frappe.request.headers
 	secret = get_decrypted_password(

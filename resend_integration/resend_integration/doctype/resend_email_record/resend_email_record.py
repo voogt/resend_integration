@@ -4,10 +4,8 @@
 import frappe
 import resend
 from frappe.model.document import Document
-from frappe.utils.password import get_decrypted_password
 
-def get_resend_api_key():
-	return get_decrypted_password("Resend Settings", "Resend Settings", "api_key")
+from resend_integration.api import get_resend_api_key
 
 class ResendEmailRecord(Document):
 	def before_submit(self):
